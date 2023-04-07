@@ -5,21 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HinsHo.ScreenShot.CSharp"
         mc:Ignorable="d"
-        Title="RegionSelectionWindow" Height="450" Width="800">
+        Title="RegionSelectionWindow">
     <Canvas>
-        <Image Name="BackgroundImage" Opacity="0.4"/>
-        <Border Name="SelectionBorder" Width="0" Height="0" ClipToBounds="True">
+        <Image Name="BackgroundImage"/>
+        <Border Name="SelectionBorder" ClipToBounds="True">
             <Grid>
                 <Canvas>
-                    <Image Name="SelectionImage"
-                           Source="{Binding Source, ElementName=BackgroundImage}"
-                           Width="{Binding ActualWidth, ElementName=BackgroundImage}"
-                           Height="{Binding ActualHeight, ElementName=BackgroundImage}"
-                           Stretch="None"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top" />
+                    <Image Name="SelectionImage" Source="{Binding Source, ElementName=BackgroundImage}"
+                           Width="{Binding ActualWidth, ElementName=BackgroundImage}" Height="{Binding ActualHeight, ElementName=BackgroundImage}"
+                           Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Canvas>
-                <Border Name="InnerBorder" BorderThickness="1" BorderBrush="Red" />
+                <Border Name="InnerBorder" BorderThickness="1"/>
             </Grid>
         </Border>
     </Canvas>

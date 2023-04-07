@@ -8,7 +8,7 @@ namespace HinsHo.ScreenShot.CSharp
 {
     public class Screenshot
     {
-        public static BitmapSource CaptureAllScreens()
+        private static BitmapSource CaptureAllScreens()
         {
             return CaptureRegionToBitmapSource(new Rect(SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop, SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight));
         }
@@ -46,6 +46,17 @@ namespace HinsHo.ScreenShot.CSharp
             return GetBitmapRegion(bitmap, window.SelectedRegion.Value);
         }
 
+        private static BitmapSource CaptureRegionToBitmapSource(Rect rect)
+        {
+            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height, PixelFormat.Format32bppArgb))
+            {
+                var graphics = System.Drawing.Graphics.FromImage(bitmap);
+                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, new Size((int)rect.Size.Width, (int)rect.Size.Height), CopyPixelOperation.SourceCopy);
+
+                return bitmap.ToBitmapSource();
+            }
+        }
+
         public static Bitmap CaptureRegionToBitmap(ScreenshotOptions options = null/* TODO Change to default(_) if this is not a reference type */)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
@@ -62,19 +73,7 @@ namespace HinsHo.ScreenShot.CSharp
             return bp;
         }
 
-
-        public static BitmapSource CaptureRegionToBitmapSource(Rect rect)
-        {
-            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height, PixelFormat.Format32bppArgb))
-            {
-                var graphics = System.Drawing.Graphics.FromImage(bitmap);
-                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, new Size((int)rect.Size.Width, (int)rect.Size.Height), CopyPixelOperation.SourceCopy);
-
-                return bitmap.ToBitmapSource();
-            }
-        }
-
-        public static Bitmap CaptureRegionToBitmap(Rect rect)
+        private static Bitmap CaptureRegionToBitmap(Rect rect)
         {
             using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height, PixelFormat.Format32bppArgb))
             {

@@ -12,13 +12,13 @@ namespace HinsHo.ScreenShot.CSharp
     {
         private Point? _selectionStartPos;
 
+        public Rect? SelectedRegion { get; set; }
+
         public RegionSelectionWindow()
         {
             InitializeComponent();
             this.Loaded += (s, e) => Activate();
         }
-
-        public Rect? SelectedRegion { get; set; }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {

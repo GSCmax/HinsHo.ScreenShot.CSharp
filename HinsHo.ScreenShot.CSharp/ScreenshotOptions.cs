@@ -4,13 +4,7 @@ namespace HinsHo.ScreenShot.CSharp
 {
     public class ScreenshotOptions
     {
-        public ScreenshotOptions()
-        {
-            BackgroundOpacity = 0.5;
-            SelectionRectangleBorderBrush = Brushes.Red;
-        }
-
-        public double BackgroundOpacity { get; set; }
-        public Brush SelectionRectangleBorderBrush { get; set; }
+        public double BackgroundOpacity { get; set; } = 0.8;
+        public Brush SelectionRectangleBorderBrush { get; set; } = Brushes.Red;
     }
 }
