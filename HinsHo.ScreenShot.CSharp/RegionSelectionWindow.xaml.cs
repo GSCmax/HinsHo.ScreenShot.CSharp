@@ -17,18 +17,21 @@ namespace HinsHo.ScreenShot.CSharp
         public RegionSelectionWindow()
         {
             InitializeComponent();
-            this.Loaded += (s, e) => Activate();
+            Loaded += (s, e) => Activate();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
+
             Close();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
+
+            InnerBorder.BorderThickness = new Thickness(1);
             _selectionStartPos = e.GetPosition(this);
             Mouse.Capture(this);
         }
@@ -42,7 +45,7 @@ namespace HinsHo.ScreenShot.CSharp
 
             SelectedRegion = new Rect(_selectionStartPos.Value, e.GetPosition(this));
             _selectionStartPos = default(Point?);
-            Mouse.Capture(null/* TODO Change to default(_) if this is not a reference type */);
+            Mouse.Capture(null);
             Close();
         }
 

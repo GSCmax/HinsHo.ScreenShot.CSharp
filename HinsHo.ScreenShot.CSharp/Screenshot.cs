@@ -1,95 +1,74 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Matrix = System.Windows.Media.Matrix;
 using Size = System.Drawing.Size;
 
 namespace HinsHo.ScreenShot.CSharp
 {
     public class Screenshot
     {
+        static Screenshot()
+        {
+            using (var source = new HwndSource(new HwndSourceParameters()))
+            {
+                toDevice = source.CompositionTarget.TransformToDevice;
+            }
+        }
+
+        static Matrix toDevice;
+
         private static BitmapSource CaptureAllScreens()
         {
-            return CaptureRegionToBitmapSource(new Rect(SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop, SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight));
-        }
+            int screenWidth = Convert.ToInt32(SystemParameters.VirtualScreenWidth * toDevice.M11);
+            int screenHeight = Convert.ToInt32(SystemParameters.PrimaryScreenHeight * toDevice.M22);
 
-        public static BitmapSource CaptureRegionToBitmapSource(ScreenshotOptions options = null/* TODO Change to default(_) if this is not a reference type */)
-        {
-            if (options == null)
-                options = new ScreenshotOptions();
-            var bitmap = CaptureAllScreens();
-
-            var left = SystemParameters.VirtualScreenLeft;
-            var top = SystemParameters.VirtualScreenTop;
-            var right = left + SystemParameters.VirtualScreenWidth;
-            var bottom = right + SystemParameters.VirtualScreenHeight;
-
-            RegionSelectionWindow window = new RegionSelectionWindow();
-            window.WindowStyle = WindowStyle.None;
-            window.ResizeMode = ResizeMode.NoResize;
-            window.Topmost = true;
-            window.ShowInTaskbar = false;
-            window.BorderThickness = new Thickness(0);
-            window.BackgroundImage.Source = bitmap;
-            window.BackgroundImage.Opacity = options.BackgroundOpacity;
-            window.InnerBorder.BorderBrush = options.SelectionRectangleBorderBrush;
-            window.Left = left;
-            window.Top = top;
-            window.Width = right - left;
-            window.Height = bottom - top;
-
-            window.ShowDialog();
-
-            if (window.SelectedRegion == null)
-                return null/* TODO Change to default(_) if this is not a reference type */;
-
-            return GetBitmapRegion(bitmap, window.SelectedRegion.Value);
-        }
-
-        private static BitmapSource CaptureRegionToBitmapSource(Rect rect)
-        {
-            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height, PixelFormat.Format32bppArgb))
+            using (var bitmap = new Bitmap(screenWidth, screenHeight, PixelFormat.Format32bppArgb))
             {
-                var graphics = System.Drawing.Graphics.FromImage(bitmap);
-                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, new Size((int)rect.Size.Width, (int)rect.Size.Height), CopyPixelOperation.SourceCopy);
+                var graphics = Graphics.FromImage(bitmap);
+                graphics.CopyFromScreen(0, 0, 0, 0, new Size(screenWidth, screenHeight), CopyPixelOperation.SourceCopy);
 
                 return bitmap.ToBitmapSource();
             }
         }
 
-        public static Bitmap CaptureRegionToBitmap(ScreenshotOptions options = null/* TODO Change to default(_) if this is not a reference type */)
+        public static BitmapSource CaptureRegionToBitmapSource(ScreenshotOptions options = null)
         {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
-            BitmapSource bs = CaptureRegionToBitmapSource();
-            if (bs == null)
-                return null/* TODO Change to default(_) if this is not a reference type */;
+            if (options == null)
+                options = new ScreenshotOptions();
+            var bitmap = CaptureAllScreens();
 
-            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)bs));
-            encoder.Save(ms);
-            Bitmap bp = new Bitmap(ms);
-            ms.Close();
+            RegionSelectionWindow window = new RegionSelectionWindow();
+            window.BackgroundImage.Source = bitmap;
+            window.BackgroundImage.Opacity = options.BackgroundOpacity;
+            window.InnerBorder.BorderBrush = options.SelectionRectangleBorderBrush;
+            window.Left = SystemParameters.VirtualScreenLeft;
+            window.Top = SystemParameters.VirtualScreenTop;
+            window.Width = SystemParameters.VirtualScreenWidth;
+            window.Height = SystemParameters.VirtualScreenHeight;
+            window.ShowDialog();
 
-            return bp;
-        }
+            if (window.SelectedRegion == null)
+                return null;
 
-        private static Bitmap CaptureRegionToBitmap(Rect rect)
-        {
-            using (var bitmap = new Bitmap((int)rect.Width, (int)rect.Height, PixelFormat.Format32bppArgb))
-            {
-                var graphics = System.Drawing.Graphics.FromImage(bitmap);
-                graphics.CopyFromScreen((int)rect.X, (int)rect.Y, 0, 0, new Size((int)rect.Size.Width, (int)rect.Size.Height), CopyPixelOperation.SourceCopy);
-
-                return bitmap;
-            }
+            return GetBitmapRegion(bitmap, window.SelectedRegion.Value);
         }
 
         private static BitmapSource GetBitmapRegion(BitmapSource bitmap, Rect rect)
         {
             if (rect.Width <= 0 | rect.Height <= 0)
-                return null/* TODO Change to default(_) if this is not a reference type */;
+                return null;
 
-            return new CroppedBitmap(bitmap, new Int32Rect() { X = (int)rect.X, Y = (int)rect.Y, Width = (int)rect.Width, Height = (int)rect.Height });
+            return new CroppedBitmap(bitmap, new Int32Rect()
+            {
+                X = Convert.ToInt32(rect.X * toDevice.M11),
+                Y = Convert.ToInt32(rect.Y * toDevice.M22),
+                Width = Convert.ToInt32(rect.Width * toDevice.M11),
+                Height = Convert.ToInt32(rect.Height * toDevice.M22)
+            });
         }
     }
 }
