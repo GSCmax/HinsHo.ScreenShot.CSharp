@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HinsHo.ScreenShot.CSharp"
-        mc:Ignorable="d" Title="RegionSelectionWindow" Cursor="Cross"
+        mc:Ignorable="d" Title="RegionSelectionWindow"
         BorderThickness="0" ShowInTaskbar="False" Topmost="True"
         ResizeMode="NoResize" WindowStyle="None" UseLayoutRounding="True">
     <Canvas>
