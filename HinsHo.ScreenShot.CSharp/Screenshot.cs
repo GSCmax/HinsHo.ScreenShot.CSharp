@@ -21,7 +21,7 @@ namespace HinsHo.ScreenShot.CSharp
 
         static Matrix toDevice;
 
-        private static BitmapSource CaptureAllScreens()
+        public static BitmapSource CaptureAllScreens()
         {
             int screenWidth = Convert.ToInt32(SystemParameters.VirtualScreenWidth * toDevice.M11);
             int screenHeight = Convert.ToInt32(SystemParameters.PrimaryScreenHeight * toDevice.M22);

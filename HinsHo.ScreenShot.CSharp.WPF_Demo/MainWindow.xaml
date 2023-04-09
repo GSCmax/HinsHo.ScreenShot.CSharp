@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HinsHo.ScreenShot.CSharp.WPF_Demo"
         mc:Ignorable="d"
-        Title="DemoWindow" Height="450" Width="800">
+        Title="ScreenShotDemoWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Content="Take Screen Shot" Margin="5" Padding="3" Width="120" HorizontalAlignment="Left" Click="Button_Click"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Screen Shot" Margin="5,5,0,0" Width="120" Click="Screen_Shot_Button_Click"/>
+            <Button Content="Full Screen Shot" Margin="5,5,0,0" Width="120" Click="Full_Screen_Shot_Button_Click"/>
+        </StackPanel>
         <Image Name="imgScreenShot" Grid.Row="1" Margin="5"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace HinsHo.ScreenShot.CSharp.WPF_Demo
 {
@@ -12,10 +13,21 @@ namespace HinsHo.ScreenShot.CSharp.WPF_Demo
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Screen_Shot_Button_Click(object sender, RoutedEventArgs e)
         {
-            var bitmapSource = HinsHo.ScreenShot.CSharp.Screenshot.CaptureRegionToBitmapSource();
-            this.imgScreenShot.Source = bitmapSource;
+            var options = new HinsHo.ScreenShot.CSharp.ScreenshotOptions()
+            {
+                BackgroundOpacity = 0.5,
+                SelectionRectangleBorderBrush = Brushes.Blue
+            };
+            var bitmapSource = HinsHo.ScreenShot.CSharp.Screenshot.CaptureRegionToBitmapSource(options);
+            imgScreenShot.Source = bitmapSource;
+        }
+
+        private void Full_Screen_Shot_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var bitmapSource = HinsHo.ScreenShot.CSharp.Screenshot.CaptureAllScreens();
+            imgScreenShot.Source = bitmapSource;
         }
     }
 }

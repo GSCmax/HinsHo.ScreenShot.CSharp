@@ -5,6 +5,10 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Authors>gscmax</Authors>
+    <Version>0.2.2.0</Version>
+    <Copyright>Copyright © GSC 2023</Copyright>
+    <RepositoryUrl>https://github.com/GSCmax/HinsHo.ScreenShot.CSharp</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
