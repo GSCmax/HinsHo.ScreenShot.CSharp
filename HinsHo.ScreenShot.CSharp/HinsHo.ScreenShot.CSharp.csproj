@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <LangVersion>10</LangVersion>
     <Authors>gscmax</Authors>
-    <Version>0.2.2.0</Version>
+    <Version>0.2.3.0</Version>
     <Copyright>Copyright © GSC 2023</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/HinsHo.ScreenShot.CSharp</RepositoryUrl>
   </PropertyGroup>
