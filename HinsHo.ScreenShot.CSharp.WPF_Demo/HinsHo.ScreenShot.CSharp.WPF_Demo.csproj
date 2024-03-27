@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
+    <TargetFrameworks>net47;net471;net472;net48;net481;net6.0-windows;net7.0-windows;net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <LangVersion>10</LangVersion>
     <Authors>gscmax</Authors>
-    <Version>0.2.3.0</Version>
+    <Version>0.2.4.0</Version>
     <Copyright>Copyright © GSC 2023</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/HinsHo.ScreenShot.CSharp</RepositoryUrl>
   </PropertyGroup>

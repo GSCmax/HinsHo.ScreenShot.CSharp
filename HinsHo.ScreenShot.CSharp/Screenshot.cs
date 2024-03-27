@@ -35,7 +35,7 @@ namespace HinsHo.ScreenShot.CSharp
             }
         }
 
-        public static BitmapSource CaptureRegionToBitmapSource(ScreenshotOptions options = null)
+        public static BitmapSource? CaptureRegionToBitmapSource(ScreenshotOptions? options = null)
         {
             if (options == null)
                 options = new ScreenshotOptions();
@@ -57,7 +57,7 @@ namespace HinsHo.ScreenShot.CSharp
             return GetBitmapRegion(bitmap, window.SelectedRegion.Value);
         }
 
-        private static BitmapSource GetBitmapRegion(BitmapSource bitmap, Rect rect)
+        private static BitmapSource? GetBitmapRegion(BitmapSource bitmap, Rect rect)
         {
             if (rect.Width <= 0 | rect.Height <= 0)
                 return null;
@@ -66,8 +66,8 @@ namespace HinsHo.ScreenShot.CSharp
             {
                 X = Convert.ToInt32(rect.X * toDevice.M11),
                 Y = Convert.ToInt32(rect.Y * toDevice.M22),
-                Width = Convert.ToInt32(rect.Width * toDevice.M11),
-                Height = Convert.ToInt32(rect.Height * toDevice.M22)
+                Width = Convert.ToInt32((rect.Width + 1) * toDevice.M11),
+                Height = Convert.ToInt32((rect.Height + 1) * toDevice.M22)
             });
         }
     }

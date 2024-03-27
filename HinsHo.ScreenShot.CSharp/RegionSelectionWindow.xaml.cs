@@ -63,8 +63,8 @@ namespace HinsHo.ScreenShot.CSharp
             Canvas.SetTop(SelectionImage, -top);
             Canvas.SetLeft(SelectionBorder, left);
             Canvas.SetTop(SelectionBorder, top);
-            SelectionBorder.Width = Math.Abs(position.X - _selectionStartPos.Value.X);
-            SelectionBorder.Height = Math.Abs(position.Y - _selectionStartPos.Value.Y);
+            SelectionBorder.Width = Math.Abs(position.X - _selectionStartPos.Value.X) + 1;
+            SelectionBorder.Height = Math.Abs(position.Y - _selectionStartPos.Value.Y) + 1;
         }
     }
 }
